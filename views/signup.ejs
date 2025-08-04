@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sign Up - Aptitude Pro+</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Logo in top-right -->
+    <img src="/logo.jpeg" class="logo-top-right" alt="Logo">
+
+    <!-- Sidebar Navigation (without auth links) -->
+    <div class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="/category/arithmetic">Arithmetic</a></li>
+          <li><a href="/category/logical">Logical Reasoning</a></li>
+          <li><a href="/category/verbal">Verbal Ability</a></li>
+          <li><a href="/category/reasoning">Verbal Reasoning</a></li>
+          <li><a href="/category/di">Data Interpretation</a></li>
+          <li><a href="/category/puzzle">Puzzle Quizes</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Centered signup card -->
+      <div class="auth-form">
+        <h2>Sign Up</h2>
+
+        <% if (success) { %>
+          <div class="flash flash-success"><%= success %></div>
+        <% } %>
+        <% if (error) { %>
+          <div class="flash flash-error"><%= error %></div>
+        <% } %>
+
+        <form method="POST" action="/signup">
+          <input type="text" name="name" placeholder="Full Name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <input type="password" name="password" placeholder="Password" required />
+          <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+
+          <div class="radio-group">
+            <label><input type="radio" name="userType" value="user" checked /> Student</label>
+            <label><input type="radio" name="userType" value="admin" /> Admin</label>
+          </div>
+
+          <button type="submit">Sign Up</button>
+        </form>
+
+        <div class="toggle-link">
+          Already have an account? <a href="/login">Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 AptitudePro+. All rights reserved.
+  </footer>
+</body>
+</html>

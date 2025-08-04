@@ -1,0 +1,101 @@
+<div class="main-content">
+  <h1><%= categoryTitle %></h1>
+  <p class="category-description">
+    <% if (selectedCategory === 'Arithmetic Aptitude') { %>
+      Test your mathematical and numerical reasoning skills with these problems.
+    <% } else if (selectedCategory === 'Logical Reasoning') { %>
+      Challenge your logical thinking and pattern recognition abilities.
+    <% } else if (selectedCategory === 'Verbal Ability') { %>
+      Improve your language and communication skills.
+    <% } else if (selectedCategory === 'Verbal Reasoning') { %>
+      Enhance your analytical and reasoning capabilities.
+    <% } else if (selectedCategory === 'Data Interpretation') { %>
+      Analyze charts, graphs, and data interpretation problems.
+    <% } else if (selectedCategory === 'Puzzle Quizes') { %>
+      Solve creative puzzles and brain teasers.
+    <% } %>
+  </p>
+
+  <% if (questions && questions.length > 0) { %>
+    <!-- Database Questions -->
+    <% questions.forEach((question, index) => { %>
+      <div class="question-block">
+        <p><strong>Q<%= index + 1 %>:</strong> <%= question.question %></p>
+        
+        <ul>
+          <% Object.keys(question.options).forEach(key => { %>
+            <li><%= key %>. <%= question.options[key] %></li>
+          <% }) %>
+        </ul>
+
+        <% if (isLoggedIn) { %>
+          <p class="answer">Correct answer: <%= question.correctAnswer %>. <%= question.options[question.correctAnswer] %></p>
+        <% } else { %>
+          <button class="check-answer-btn">Check Answer</button>
+        <% } %>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <!-- Prebuilt Questions -->
+    <%- include('partials/prebuiltQuestions', { selectedCategory, isLoggedIn }) %>
+  <% } %>
+
+  <% if (!isLoggedIn) { %>
+    <div class="signup-prompt">
+      <h3>Want to see more questions?</h3>
+      <p>Sign up to access our full question database and track your progress!</p>
+      <a href="/signup" class="signup-btn">Sign Up Now</a>
+    </div>
+  <% } %>
+</div>
+
+<!-- Only include popup and script for non-logged-in users -->
+<% if (!isLoggedIn) { %>
+<!-- Guest-only popup -->
+<div id="guest-popup" class="guest-popup" style="display: none;">
+  <div class="popup-content">
+    <p>Please sign up to review the answer.</p>
+    <div class="popup-buttons">
+      <button id="cancel-popup">Cancel</button>
+      <button id="signup-popup">Signup</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const guestPopup = document.getElementById('guest-popup');
+  const cancelBtn = document.getElementById('cancel-popup');
+  const signupBtn = document.getElementById('signup-popup');
+  
+  // Add event listeners to check answer buttons
+  document.querySelectorAll('.check-answer-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      guestPopup.style.display = 'flex';
+    });
+  });
+  
+  // Cancel button - hide popup
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', function() {
+      guestPopup.style.display = 'none';
+    });
+  }
+  
+  // Signup button - redirect to signup
+  if (signupBtn) {
+    signupBtn.addEventListener('click', function() {
+      window.location.href = '/signup';
+    });
+  }
+  
+  // Close popup when clicking outside
+  guestPopup.addEventListener('click', function(e) {
+    if (e.target === guestPopup) {
+      guestPopup.style.display = 'none';
+    }
+  });
+});
+</script>
+<% } %>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome - Aptitude Test</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+      background-color: #e9f5ec;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .welcome-container {
+      max-width: 800px;
+      margin: 100px auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .welcome-container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #006b4e;
+    }
+
+    .welcome-container p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .welcome-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .welcome-buttons a {
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      background-color: #006b4e;
+      color: white;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .welcome-buttons a:hover {
+      background-color: #004d37;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .logo-welcome {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 90px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <img src="/images/logo.jpeg" alt="Logo" class="logo-welcome" />
+
+  <div class="welcome-container">
+    <h1>Welcome to Aptitude Test!</h1>
+    <p>Get ready to test and improve your aptitude skills.</p>
+
+    <div class="welcome-buttons">
+      <a href="/categories">Start Solving</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 AptitudePro+. All rights reserved.
+  </footer>
+</body>
+</html>

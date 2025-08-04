@@ -1,0 +1,14 @@
+<% questions.forEach(q => { %>
+    <div class="question-block">
+      <p><%= q.questionText %></p>
+  
+      <% if (session.user) { %>
+        <form method="POST" action="/question/<%= q.id %>/check">
+          <button type="submit">Check Answer</button>
+        </form>
+      <% } else { %>
+        <button onclick="alert('Sign up to view the answer!')">Check Answer</button>
+      <% } %>
+    </div>
+  <% }); %>
+  

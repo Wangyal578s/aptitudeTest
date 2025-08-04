@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Aptitude Pro+</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>AptitudePro+</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="nav-item active">
+            <a href="/admin/dashboard" class="nav-link">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/questions" class="nav-link">
+              <i class="fas fa-list-ul"></i>
+              <span>Manage Questions</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/add-question" class="nav-link">
+              <i class="fas fa-plus-circle"></i>
+              <span>Add Question</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <h1 class="page-title">
+            <i class="fas fa-chart-line"></i>
+            Dashboard
+          </h1>
+          <p class="page-subtitle">Welcome back! Here's what's happening with your platform.</p>
+        </div>
+        <div class="header-right">
+          <div class="user-profile">
+            <div class="user-avatar">
+              <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="user-info">
+              <span class="user-name">Admin</span>
+              <span class="user-email"><%= user.email %></span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Stats Cards -->
+      <section class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-icon">
+              <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number"><%= totalQuestions || 0 %></div>
+              <div class="stat-label">Total Questions</div>
+              <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i>
+                <span>+12% from last month</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card success">
+            <div class="stat-icon">
+              <i class="fas fa-folder-open"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number"><%= totalCategories || 6 %></div>
+              <div class="stat-label">Categories</div>
+              <div class="stat-trend neutral">
+                <i class="fas fa-minus"></i>
+                <span>No change</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card warning">
+            <div class="stat-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">247</div>
+              <div class="stat-label">Active Users</div>
+              <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i>
+                <span>+8% from last week</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-card info">
+            <div class="stat-icon">
+              <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number">89%</div>
+              <div class="stat-label">Success Rate</div>
+              <div class="stat-trend positive">
+                <i class="fas fa-arrow-up"></i>
+                <span>+3% improvement</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <section class="quick-actions-section">
+        <div class="section-header">
+          <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+          <p>Manage your platform efficiently</p>
+        </div>
+        <div class="actions-grid">
+          <a href="/admin/add-question" class="action-card primary">
+            <div class="action-icon">
+              <i class="fas fa-plus"></i>
+            </div>
+            <div class="action-content">
+              <h3>Add New Question</h3>
+              <p>Create questions with multiple choice options</p>
+            </div>
+            <div class="action-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="/admin/questions" class="action-card secondary">
+            <div class="action-icon">
+              <i class="fas fa-edit"></i>
+            </div>
+            <div class="action-content">
+              <h3>Manage Questions</h3>
+              <p>Edit, delete, or organize existing questions</p>
+            </div>
+            <div class="action-arrow">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+
+          <a href="/category/arithmetic" class="action-card tertiary" target="_blank">
+            <div class="action-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <div class="action-content">
+              <h3>Preview Questions</h3>
+              <p>See how questions appear to users</p>
+            </div>
+            <div class="action-arrow">
+              <i class="fas fa-external-link-alt"></i>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Categories Overview -->
+      <section class="categories-section">
+        <div class="section-header">
+          <h2><i class="fas fa-chart-pie"></i> Categories Overview</h2>
+          <p>Questions distribution across categories</p>
+        </div>
+        <div class="categories-grid">
+          <div class="category-card arithmetic">
+            <div class="category-icon">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <div class="category-info">
+              <h4>Arithmetic</h4>
+              <span class="question-count">12 questions</span>
+            </div>
+          </div>
+          <div class="category-card logical">
+            <div class="category-icon">
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="category-info">
+              <h4>Logical Reasoning</h4>
+              <span class="question-count">8 questions</span>
+            </div>
+          </div>
+          <div class="category-card verbal">
+            <div class="category-icon">
+              <i class="fas fa-comments"></i>
+            </div>
+            <div class="category-info">
+              <h4>Verbal Ability</h4>
+              <span class="question-count">15 questions</span>
+            </div>
+          </div>
+          <div class="category-card data">
+            <div class="category-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="category-info">
+              <h4>Data Interpretation</h4>
+              <span class="question-count">6 questions</span>
+            </div>
+          </div>
+          <div class="category-card reasoning">
+            <div class="category-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="category-info">
+              <h4>Verbal Reasoning</h4>
+              <span class="question-count">9 questions</span>
+            </div>
+          </div>
+          <div class="category-card puzzle">
+            <div class="category-icon">
+              <i class="fas fa-puzzle-piece"></i>
+            </div>
+            <div class="category-info">
+              <h4>Puzzle Quizzes</h4>
+              <span class="question-count">4 questions</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

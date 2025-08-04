@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Question - Admin Panel</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>AptitudePro+</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="nav-item">
+            <a href="/admin/dashboard" class="nav-link">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/questions" class="nav-link">
+              <i class="fas fa-list-ul"></i>
+              <span>Manage Questions</span>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a href="/admin/add-question" class="nav-link">
+              <i class="fas fa-plus-circle"></i>
+              <span>Add Question</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <h1 class="page-title">
+            <i class="fas fa-plus-circle"></i>
+            Add New Question
+          </h1>
+          <p class="page-subtitle">Create a new question with multiple choice options</p>
+        </div>
+      </header>
+
+      <!-- Flash Messages -->
+      <% if (success) { %>
+        <div class="alert alert-success">
+          <i class="fas fa-check-circle"></i>
+          <%= success %>
+        </div>
+      <% } %>
+      <% if (error) { %>
+        <div class="alert alert-error">
+          <i class="fas fa-exclamation-circle"></i>
+          <%= error %>
+        </div>
+      <% } %>
+
+      <!-- Form Section -->
+      <section class="form-section">
+        <div class="form-container">
+          <form action="/admin/add-question" method="POST" class="question-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="categoryId">
+                  <i class="fas fa-folder"></i>
+                  Category
+                </label>
+                <select name="categoryId" id="categoryId" required>
+                  <option value="">Select a category</option>
+                  <% categories.forEach(category => { %>
+                    <option value="<%= category.id %>"><%= category.name %></option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="question">
+                  <i class="fas fa-question-circle"></i>
+                  Question
+                </label>
+                <textarea name="question" id="question" rows="4" required placeholder="Enter your question here..."></textarea>
+              </div>
+            </div>
+
+            <div class="options-section">
+              <h3><i class="fas fa-list"></i> Answer Options</h3>
+              <div class="options-grid">
+                <div class="form-group">
+                  <label for="optionA">Option A</label>
+                  <input type="text" name="optionA" id="optionA" required placeholder="Enter option A">
+                </div>
+                <div class="form-group">
+                  <label for="optionB">Option B</label>
+                  <input type="text" name="optionB" id="optionB" required placeholder="Enter option B">
+                </div>
+                <div class="form-group">
+                  <label for="optionC">Option C</label>
+                  <input type="text" name="optionC" id="optionC" required placeholder="Enter option C">
+                </div>
+                <div class="form-group">
+                  <label for="optionD">Option D</label>
+                  <input type="text" name="optionD" id="optionD" required placeholder="Enter option D">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="correctAnswer">
+                  <i class="fas fa-check"></i>
+                  Correct Answer
+                </label>
+                <select name="correctAnswer" id="correctAnswer" required>
+                  <option value="">Select correct answer</option>
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Add Question
+              </button>
+              <a href="/admin/questions" class="btn btn-secondary">
+                <i class="fas fa-times"></i>
+                Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

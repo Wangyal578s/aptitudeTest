@@ -1,0 +1,187 @@
+<!-- views/partials/prebuiltQuestion.ejs -->
+<% const showAll = typeof selectedCategory === 'undefined'; %>
+
+<% if (showAll || selectedCategory === 'Arithmetic') { %>
+  <div class="question-category-section" data-category="Arithmetic">
+    <h2>Arithmetic Aptitude</h2>
+    <div class="question-block">
+      <p><strong>Q1:</strong> If a pen costs Nu. 12 and a notebook costs Nu. 45, what is the total cost of 3 pens and 2 notebooks?</p>
+      <ul>
+        <li>Nu. 126</li>
+        <li>Nu. 114</li>
+        <li>Nu. 99</li>
+        <li>Nu. 111</li>
+      </ul>
+      <% if (isLoggedIn) { %>
+        <p class="answer">Correct answer: Nu. 126</p>
+      <% } else { %>
+        <button class="check-answer-btn">Check Answer</button>
+      <% } %>
+    </div>
+    <div class="question-block">
+      <p><strong>Q2:</strong> What is 15% of Nu. 200?</p>
+      <ul>
+        <li>Nu. 20</li>
+        <li>Nu. 25</li>
+        <li>Nu. 30</li>
+        <li>Nu. 35</li>
+      </ul>
+      <% if (isLoggedIn) { %>
+        <p class="answer">Correct answer: Nu. 30</p>
+      <% } else { %>
+        <button class="check-answer-btn">Check Answer</button>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+<% if (showAll || selectedCategory === 'Data Interpretation') { %>
+  <div class="question-category-section" data-category="Data Interpretation">
+    <h2>Data Interpretation</h2>
+    <div class="question-block">
+      <p><strong>Q1:</strong> If the population of a town increased from 20,000 to 25,000 in a year, what is the percentage increase?</p>
+      <ul>
+        <li>20%</li>
+        <li>25%</li>
+        <li>30%</li>
+        <li>18%</li>
+      </ul>
+      <% if (isLoggedIn) { %>
+        <p class="answer">Correct answer: 25%</p>
+      <% } else { %>
+        <button class="check-answer-btn">Check Answer</button>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+<% if (showAll || selectedCategory === 'Verbal Ability') { %>
+  <div class="question-category-section" data-category="Verbal Ability">
+    <h2>Verbal Ability</h2>
+    <div class="question-block">
+      <p><strong>Q1:</strong> Choose the correct spelling:</p>
+      <ul>
+        <li>Acommodate</li>
+        <li>Accommodate</li>
+        <li>Acomodate</li>
+        <li>Acommadate</li>
+      </ul>
+      <% if (isLoggedIn) { %>
+        <p class="answer">Correct answer: Accommodate</p>
+      <% } else { %>
+        <button class="check-answer-btn">Check Answer</button>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+<% if (showAll || selectedCategory === 'Logical Reasoning') { %>
+  <div class="question-category-section" data-category="Logical Reasoning">
+    <h2>Logical Reasoning</h2>
+    <div class="question-block">
+      <p><strong>Q1:</strong> Which number comes next in the series: 2, 6, 12, 20, 30, ?</p>
+      <ul>
+        <li>36</li>
+        <li>42</li>
+        <li>50</li>
+        <li>56</li>
+      </ul>
+      <% if (isLoggedIn) { %>
+        <p class="answer">Correct answer: 42</p>
+      <% } else { %>
+        <button class="check-answer-btn">Check Answer</button>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+<% if (showAll || selectedCategory === 'Verbal Reasoning') { %>
+  <div class="question-category-section" data-category="Verbal Reasoning">
+    <h2>Verbal Reasoning</h2>
+    <div class="question-block">
+      <p><strong>Q1:</strong> If all bloops are razzies and all razzies are lazzies, are all bloops definitely lazzies?</p>
+      <ul>
+        <li>Yes</li>
+        <li>No</li>
+        <li>Can't say</li>
+        <li>None of the above</li>
+      </ul>
+      <% if (isLoggedIn) { %>
+        <p class="answer">Correct answer: Yes</p>
+      <% } else { %>
+        <button class="check-answer-btn">Check Answer</button>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+<% if (showAll || selectedCategory === 'Puzzle Quizes') { %>
+  <div class="question-category-section" data-category="Puzzle Quizes">
+    <h2>Puzzle Quizes</h2>
+    <div class="question-block">
+      <p><strong>Q1:</strong> You have 2 ropes that each take exactly 1 hour to burn. How can you measure 45 minutes?</p>
+      <ul>
+        <li>Burn one rope from one end and the other from both ends</li>
+        <li>Burn both ropes from one end</li>
+        <li>Burn both ropes from both ends</li>
+        <li>Impossible to measure</li>
+      </ul>
+      <% if (isLoggedIn) { %>
+        <p class="answer">Correct answer: Burn one rope from one end and the other from both ends</p>
+      <% } else { %>
+        <button class="check-answer-btn">Check Answer</button>
+      <% } %>
+    </div>
+  </div>
+<% } %>
+
+<!-- Only include popup and script for non-logged-in users -->
+<% if (!isLoggedIn) { %>
+<!-- Guest-only popup -->
+<div id="guest-popup" class="guest-popup" style="display: none;">
+  <div class="popup-content">
+    <p>Please sign up to review the answer.</p>
+    <div class="popup-buttons">
+      <button id="cancel-popup">Cancel</button>
+      <button id="signup-popup">Signup</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const guestPopup = document.getElementById('guest-popup');
+  const cancelBtn = document.getElementById('cancel-popup');
+  const signupBtn = document.getElementById('signup-popup');
+  
+  // Add event listeners to check answer buttons
+  document.querySelectorAll('.check-answer-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      guestPopup.style.display = 'flex';
+    });
+  });
+  
+  // Cancel button - hide popup
+  if (cancelBtn) {
+    cancelBtn.addEventListener('click', function() {
+      guestPopup.style.display = 'none';
+    });
+  }
+  
+  // Signup button - redirect to signup
+  if (signupBtn) {
+    signupBtn.addEventListener('click', function() {
+      window.location.href = '/signup';
+    });
+  }
+  
+  // Close popup when clicking outside
+  guestPopup.addEventListener('click', function(e) {
+    if (e.target === guestPopup) {
+      guestPopup.style.display = 'none';
+    }
+  });
+});
+</script>
+<% } %>

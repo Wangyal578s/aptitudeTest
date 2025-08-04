@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Question - Admin Panel</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>AptitudePro+</span>
+        </div>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="nav-item">
+            <a href="/admin/dashboard" class="nav-link">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item active">
+            <a href="/admin/questions" class="nav-link">
+              <i class="fas fa-list-ul"></i>
+              <span>Manage Questions</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/admin/add-question" class="nav-link">
+              <i class="fas fa-plus-circle"></i>
+              <span>Add Question</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="header-left">
+          <h1 class="page-title">
+            <i class="fas fa-edit"></i>
+            Edit Question
+          </h1>
+          <p class="page-subtitle">Update question details and options</p>
+        </div>
+        <div class="header-right">
+          <a href="/admin/questions" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i>
+            Back to Questions
+          </a>
+        </div>
+      </header>
+
+      <!-- Form Section -->
+      <section class="form-section">
+        <div class="form-container">
+          <div class="form-header">
+            <div class="form-icon">
+              <i class="fas fa-edit"></i>
+            </div>
+            <div class="form-title">
+              <h2>Question Details</h2>
+              <p>Make changes to the question and save when you're done</p>
+            </div>
+          </div>
+
+          <form action="/admin/questions/<%= question.id %>/edit" method="POST" class="question-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="categoryId">
+                  <i class="fas fa-folder"></i>
+                  Category
+                </label>
+                <select name="categoryId" id="categoryId" required>
+                  <% categories.forEach(category => { %>
+                    <option value="<%= category.id %>" <%= category.id === question.categoryId ? 'selected' : '' %>>
+                      <%= category.name %>
+                    </option>
+                  <% }) %>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full-width">
+                <label for="question">
+                  <i class="fas fa-question-circle"></i>
+                  Question
+                </label>
+                <textarea name="question" id="question" rows="4" required placeholder="Enter your question here..."><%= question.question %></textarea>
+                <div class="form-help">
+                  <i class="fas fa-info-circle"></i>
+                  Write a clear and concise question that students can easily understand
+                </div>
+              </div>
+            </div>
+
+            <div class="options-section">
+              <h3><i class="fas fa-list"></i> Answer Options</h3>
+              <p class="options-subtitle">Provide four multiple choice options for this question</p>
+              <div class="options-grid">
+                <div class="form-group option-group">
+                  <label for="optionA">
+                    <span class="option-letter">A</span>
+                    Option A
+                  </label>
+                  <input type="text" name="optionA" id="optionA" value="<%= question.parsedOptions.A || '' %>" required placeholder="Enter option A">
+                </div>
+                <div class="form-group option-group">
+                  <label for="optionB">
+                    <span class="option-letter">B</span>
+                    Option B
+                  </label>
+                  <input type="text" name="optionB" id="optionB" value="<%= question.parsedOptions.B || '' %>" required placeholder="Enter option B">
+                </div>
+                <div class="form-group option-group">
+                  <label for="optionC">
+                    <span class="option-letter">C</span>
+                    Option C
+                  </label>
+                  <input type="text" name="optionC" id="optionC" value="<%= question.parsedOptions.C || '' %>" required placeholder="Enter option C">
+                </div>
+                <div class="form-group option-group">
+                  <label for="optionD">
+                    <span class="option-letter">D</span>
+                    Option D
+                  </label>
+                  <input type="text" name="optionD" id="optionD" value="<%= question.parsedOptions.D || '' %>" required placeholder="Enter option D">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="correctAnswer">
+                  <i class="fas fa-check-circle"></i>
+                  Correct Answer
+                </label>
+                <select name="correctAnswer" id="correctAnswer" required>
+                  <option value="">Select correct answer</option>
+                  <option value="A" <%= question.correctAnswer === 'A' ? 'selected' : '' %>>A</option>
+                  <option value="B" <%= question.correctAnswer === 'B' ? 'selected' : '' %>>B</option>
+                  <option value="C" <%= question.correctAnswer === 'C' ? 'selected' : '' %>>C</option>
+                  <option value="D" <%= question.correctAnswer === 'D' ? 'selected' : '' %>>D</option>
+                </select>
+                <div class="form-help">
+                  <i class="fas fa-lightbulb"></i>
+                  Select which option is the correct answer
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i>
+                Update Question
+              </button>
+              <a href="/admin/questions" class="btn btn-secondary">
+                <i class="fas fa-times"></i>
+                Cancel
+              </a>
+              <button type="button" class="btn btn-tertiary" onclick="previewQuestion()">
+                <i class="fas fa-eye"></i>
+                Preview
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Preview Modal -->
+      <div id="previewModal" class="preview-modal" style="display: none;">
+        <div class="preview-content">
+          <div class="preview-header">
+            <h3><i class="fas fa-eye"></i> Question Preview</h3>
+            <button type="button" class="close-preview" onclick="closePreview()">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <div class="preview-body">
+            <div class="preview-question">
+              <p id="previewQuestionText"></p>
+              <div class="preview-options" id="previewOptions"></div>
+              <div class="preview-answer" id="previewAnswer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    function previewQuestion() {
+      const question = document.getElementById('question').value;
+      const optionA = document.getElementById('optionA').value;
+      const optionB = document.getElementById('optionB').value;
+      const optionC = document.getElementById('optionC').value;
+      const optionD = document.getElementById('optionD').value;
+      const correctAnswer = document.getElementById('correctAnswer').value;
+
+      if (!question || !optionA || !optionB || !optionC || !optionD || !correctAnswer) {
+        alert('Please fill in all fields before previewing');
+        return;
+      }
+
+      document.getElementById('previewQuestionText').textContent = question;
+      
+      const optionsHtml = `
+        <div class="option-item">
+          <input type="radio" name="preview" id="prevA" disabled>
+          <label for="prevA">A. ${optionA}</label>
+        </div>
+        <div class="option-item">
+          <input type="radio" name="preview" id="prevB" disabled>
+          <label for="prevB">B. ${optionB}</label>
+        </div>
+        <div class="option-item">
+          <input type="radio" name="preview" id="prevC" disabled>
+          <label for="prevC">C. ${optionC}</label>
+        </div>
+        <div class="option-item">
+          <input type="radio" name="preview" id="prevD" disabled>
+          <label for="prevD">D. ${optionD}</label>
+        </div>
+      `;
+      
+      document.getElementById('previewOptions').innerHTML = optionsHtml;
+      document.getElementById('previewAnswer').innerHTML = `<strong>Correct Answer: ${correctAnswer}</strong>`;
+      
+      document.getElementById('previewModal').style.display = 'flex';
+    }
+
+    function closePreview() {
+      document.getElementById('previewModal').style.display = 'none';
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('previewModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePreview();
+      }
+    });
+  </script>
+</body>
+</html>

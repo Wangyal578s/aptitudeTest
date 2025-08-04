@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Choose Category - Aptitude Pro+</title>
+  <link rel="stylesheet" href="/css/user-styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-content">
+        <div class="logo">
+          <img src="/logo.jpeg" alt="AptitudePro+" class="logo-img">
+          <span class="logo-text">AptitudePro+</span>
+        </div>
+        <nav class="header-nav">
+          <a href="/user/history" class="nav-link">
+            <i class="fas fa-history"></i>
+            My History
+          </a>
+          <a href="/logout" class="nav-link logout">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="hero-section">
+        <h1 class="hero-title">Choose Your Aptitude Test</h1>
+        <p class="hero-subtitle">Select a category to start practicing questions</p>
+      </div>
+
+      <div class="categories-grid">
+        <% categories.forEach(category => { %>
+          <div class="category-card" data-category="<%= category.slug %>">
+            <div class="category-icon">
+              <% if (category.slug === 'arithmetic') { %>
+                <i class="fas fa-calculator"></i>
+              <% } else if (category.slug === 'logical') { %>
+                <i class="fas fa-brain"></i>
+              <% } else if (category.slug === 'verbal') { %>
+                <i class="fas fa-comments"></i>
+              <% } else if (category.slug === 'reasoning') { %>
+                <i class="fas fa-lightbulb"></i>
+              <% } else if (category.slug === 'di') { %>
+                <i class="fas fa-chart-line"></i>
+              <% } else if (category.slug === 'puzzle') { %>
+                <i class="fas fa-puzzle-piece"></i>
+              <% } %>
+            </div>
+            <div class="category-content">
+              <h3 class="category-title"><%= category.name %></h3>
+              <p class="category-description">
+                <% if (category.slug === 'arithmetic') { %>
+                  Test your mathematical and numerical reasoning skills
+                <% } else if (category.slug === 'logical') { %>
+                  Challenge your logical thinking and pattern recognition
+                <% } else if (category.slug === 'verbal') { %>
+                  Improve your language and communication abilities
+                <% } else if (category.slug === 'reasoning') { %>
+                  Enhance your analytical and reasoning capabilities
+                <% } else if (category.slug === 'di') { %>
+                  Analyze charts, graphs, and data interpretation
+                <% } else if (category.slug === 'puzzle') { %>
+                  Solve creative puzzles and brain teasers
+                <% } %>
+              </p>
+              <div class="category-stats">
+                <span class="question-count">
+                  <i class="fas fa-question-circle"></i>
+                  <%= category.questionCount || 0 %> Questions
+                </span>
+              </div>
+              <a href="/quiz/<%= category.slug %>" class="start-quiz-btn">
+                <i class="fas fa-play"></i>
+                Start Quiz
+              </a>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <p>&copy; 2025 AptitudePro+. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

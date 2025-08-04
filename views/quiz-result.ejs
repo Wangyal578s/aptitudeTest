@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Results - Aptitude Pro+</title>
+  <link rel="stylesheet" href="/css/user-styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-content">
+        <div class="logo">
+          <img src="/logo.jpeg" alt="AptitudePro+" class="logo-img">
+          <span class="logo-text">AptitudePro+</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Results Content -->
+    <main class="results-content">
+      <div class="results-header">
+        <div class="results-icon">
+          <% if (percentage >= 80) { %>
+            <i class="fas fa-trophy" style="color: #f6ad55;"></i>
+          <% } else if (percentage >= 60) { %>
+            <i class="fas fa-medal" style="color: #68d391;"></i>
+          <% } else { %>
+            <i class="fas fa-chart-line" style="color: #667eea;"></i>
+          <% } %>
+        </div>
+        <h1 class="results-title">Quiz Completed!</h1>
+        <p class="results-subtitle"><%= categoryName %></p>
+      </div>
+
+      <div class="score-card">
+        <div class="score-circle">
+          <div class="score-number"><%= score %></div>
+          <div class="score-total">/ <%= total %></div>
+        </div>
+        <div class="score-percentage">
+          <%= Math.round(percentage) %>% Correct
+        </div>
+      </div>
+
+      <div class="results-details">
+        <div class="detail-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Correct Answers: <%= score %></span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-times-circle"></i>
+          <span>Incorrect Answers: <%= total - score %></span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-question-circle"></i>
+          <span>Total Questions: <%= total %></span>
+        </div>
+      </div>
+
+      <div class="results-actions">
+        <a href="/categories" class="btn btn-primary">
+          <i class="fas fa-redo"></i>
+          Take Another Quiz
+        </a>
+        <a href="/user/history" class="btn btn-secondary">
+          <i class="fas fa-history"></i>
+          View History
+        </a>
+      </div>
+
+      <!-- Detailed Results -->
+      <div class="detailed-results">
+        <h3>Question Review</h3>
+        <% results.forEach((result, index) => { %>
+          <div class="result-item <%= result.isCorrect ? 'correct' : 'incorrect' %>">
+            <div class="result-header">
+              <span class="result-number">Q<%= index + 1 %></span>
+              <span class="result-status">
+                <% if (result.isCorrect) { %>
+                  <i class="fas fa-check"></i> Correct
+                <% } else { %>
+                  <i class="fas fa-times"></i> Incorrect
+                <% } %>
+              </span>
+            </div>
+            <div class="result-question">
+              <%= result.questionText %>
+            </div>
+            <div class="result-answers">
+              <div class="your-answer">
+                <strong>Your Answer:</strong> <%= result.userAnswer || 'Not answered' %>
+              </div>
+              <div class="correct-answer">
+                <strong>Correct Answer:</strong> <%= result.correctAnswer %>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

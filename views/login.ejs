@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Aptitude Pro+</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Logo in top-right -->
+    <img src="/logo.jpeg" class="logo-top-right" alt="Logo">
+
+    <!-- Sidebar Navigation (without auth links) -->
+    <div class="sidebar">
+      <nav>
+        <ul>
+          <li><a href="/category/arithmetic">Arithmetic</a></li>
+          <li><a href="/category/logical">Logical Reasoning</a></li>
+          <li><a href="/category/verbal">Verbal Ability</a></li>
+          <li><a href="/category/reasoning">Verbal Reasoning</a></li>
+          <li><a href="/category/di">Data Interpretation</a></li>
+          <li><a href="/category/puzzle">Puzzle Quizes</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Centered login card -->
+      <div class="auth-form">
+        <h2>Login</h2>
+
+        <!-- Flash Message Block -->
+        <% if (success) { %>
+          <div class="flash flash-success"><%= success %></div>
+        <% } %>
+        <% if (error) { %>
+          <div class="flash flash-error"><%= error %></div>
+        <% } %>
+
+        <form method="POST" action="/login">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="Enter your email" required />
+
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Enter your password" required />
+
+          <label>You are logging in as:</label>
+          <select name="userType" required>
+            <option value="user">Student</option>
+            <option value="admin">Admin</option>
+          </select>
+
+          <button type="submit">Login</button>
+        </form>
+
+        <div class="auth-links">
+          <div class="toggle-link">
+            Don't have an account? <a href="/signup">Sign up</a>
+          </div>
+          <div class="forgot-link">
+            <a href="/forgot-password">Forgot Password?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 AptitudePro+. All rights reserved.
+  </footer>
+</body>
+</html>

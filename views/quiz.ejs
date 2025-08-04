@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= category.name %> Quiz - Aptitude Pro+</title>
+  <link rel="stylesheet" href="/css/user-styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <header class="quiz-header">
+      <div class="header-content">
+        <div class="quiz-info">
+          <h1 class="quiz-title"><%= category.name %></h1>
+          <p class="quiz-subtitle"><%= questions.length %> Questions</p>
+        </div>
+        <div class="quiz-timer">
+          <i class="fas fa-clock"></i>
+          <span id="timer">30:00</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Quiz Content -->
+    <main class="quiz-content">
+      <% if (questions.length === 0) { %>
+        <div class="no-questions">
+          <div class="no-questions-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <h2>No Questions Available</h2>
+          <p>There are no questions available for this category yet.</p>
+          <a href="/categories" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i>
+            Back to Categories
+          </a>
+        </div>
+      <% } else { %>
+        <form id="quizForm" action="/quiz/<%= category.slug %>/submit" method="POST">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 0%"></div>
+          </div>
+
+          <div class="questions-container">
+            <% questions.forEach((question, index) => { %>
+              <div class="question-card" data-question="<%= index + 1 %>">
+                <div class="question-header">
+                  <span class="question-number">Question <%= index + 1 %></span>
+                  <span class="question-total">of <%= questions.length %></span>
+                </div>
+                
+                <div class="question-text">
+                  <p><%= question.question %></p>
+                </div>
+
+                <div class="options-container">
+                  <% Object.keys(question.options).forEach(optionKey => { %>
+                    <label class="option-label">
+                      <input type="radio" name="question_<%= question.id %>" value="<%= optionKey %>" required>
+                      <span class="option-custom"></span>
+                      <span class="option-text">
+                        <strong><%= optionKey %>.</strong> <%= question.options[optionKey] %>
+                      </span>
+                    </label>
+                  <% }) %>
+                </div>
+              </div>
+            <% }) %>
+          </div>
+
+          <div class="quiz-actions">
+            <button type="button" id="prevBtn" class="btn btn-secondary" style="display: none;">
+              <i class="fas fa-arrow-left"></i>
+              Previous
+            </button>
+            <button type="button" id="nextBtn" class="btn btn-primary">
+              Next
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <button type="submit" id="submitBtn" class="btn btn-success" style="display: none;">
+              <i class="fas fa-check"></i>
+              Submit Quiz
+            </button>
+          </div>
+        </form>
+      <% } %>
+    </main>
+  </div>
+
+  <script>
+    let currentQuestion = 1;
+    const totalQuestions = '<%= questions.length %>';
+    let timeLeft = 30 * 60; // 30 minutes in seconds
+
+    // Timer functionality
+    function updateTimer() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById('timer').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      
+      if (timeLeft <= 0) {
+        document.getElementById('quizForm').submit();
+        return;
+      }
+      timeLeft--;
+    }
+
+    // Start timer
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    // Question navigation
+    function showQuestion(questionNum) {
+      document.querySelectorAll('.question-card').forEach(card => {
+        card.style.display = 'none';
+      });
+      
+      const currentCard = document.querySelector(`[data-question="${questionNum}"]`);
+      if (currentCard) {
+        currentCard.style.display = 'block';
+      }
+
+      // Update progress bar
+      const progress = (questionNum / totalQuestions) * 100;
+      document.querySelector('.progress-fill').style.width = `${progress}%`;
+
+      // Update navigation buttons
+      document.getElementById('prevBtn').style.display = questionNum > 1 ? 'inline-flex' : 'none';
+      document.getElementById('nextBtn').style.display = questionNum < totalQuestions ? 'inline-flex' : 'none';
+      document.getElementById('submitBtn').style.display = questionNum === totalQuestions ? 'inline-flex' : 'none';
+    }
+
+    // Navigation event listeners
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      if (currentQuestion < totalQuestions) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+      }
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      if (currentQuestion > 1) {
+        currentQuestion--;
+        showQuestion(currentQuestion);
+      }
+    });
+
+    // Initialize first question
+    showQuestion(1);
+
+    // Form submission
+    document.getElementById('quizForm').addEventListener('submit', (e) => {
+      clearInterval(timerInterval);
+      // Form will submit normally
+    });
+  </script>
+</body>
+</html>

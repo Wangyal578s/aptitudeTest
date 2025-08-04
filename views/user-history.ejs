@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My History - Aptitude Pro+</title>
+  <link rel="stylesheet" href="/css/user-styles.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="page-container">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="header-content">
+        <div class="logo">
+          <img src="/logo.jpeg" alt="AptitudePro+" class="logo-img">
+          <span class="logo-text">AptitudePro+</span>
+        </div>
+        <nav class="header-nav">
+          <a href="/categories" class="nav-link">
+            <i class="fas fa-arrow-left"></i>
+            Back to Categories
+          </a>
+          <a href="/logout" class="nav-link logout">
+            <i class="fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- History Content -->
+    <main class="history-content">
+      <div class="history-header">
+        <h1 class="history-title">My Quiz History</h1>
+        <p class="history-subtitle">Track your progress and performance</p>
+      </div>
+
+      <% if (history.length === 0) { %>
+        <div class="no-history">
+          <div class="no-history-icon">
+            <i class="fas fa-history"></i>
+          </div>
+          <h2>No Quiz History</h2>
+          <p>You haven't taken any quizzes yet. Start practicing to see your progress!</p>
+          <a href="/categories" class="btn btn-primary">
+            <i class="fas fa-play"></i>
+            Start Your First Quiz
+          </a>
+        </div>
+      <% } else { %>
+        <div class="history-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number"><%= history.length %></div>
+              <div class="stat-label">Quizzes Taken</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-percentage"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number"><%= Math.round(averageScore) %>%</div>
+              <div class="stat-label">Average Score</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="stat-content">
+              <div class="stat-number"><%= bestScore %>%</div>
+              <div class="stat-label">Best Score</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="history-list">
+          <% history.forEach(result => { %>
+            <div class="history-item">
+              <div class="history-category">
+                <div class="category-icon">
+                  <% if (result.Category.slug === 'arithmetic') { %>
+                    <i class="fas fa-calculator"></i>
+                  <% } else if (result.Category.slug === 'logical') { %>
+                    <i class="fas fa-brain"></i>
+                  <% } else if (result.Category.slug === 'verbal') { %>
+                    <i class="fas fa-comments"></i>
+                  <% } else if (result.Category.slug === 'reasoning') { %>
+                    <i class="fas fa-lightbulb"></i>
+                  <% } else if (result.Category.slug === 'di') { %>
+                    <i class="fas fa-chart-line"></i>
+                  <% } else if (result.Category.slug === 'puzzle') { %>
+                    <i class="fas fa-puzzle-piece"></i>
+                  <% } %>
+                </div>
+                <div class="category-info">
+                  <h3><%= result.Category.name %></h3>
+                  <p><%= new Date(result.createdAt).toLocaleDateString() %></p>
+                </div>
+              </div>
+              
+              <div class="history-score">
+                <div class="score-circle small">
+                  <span><%= result.score %>/<%= result.total %></span>
+                </div>
+                <div class="score-percentage">
+                  <%= Math.round((result.score / result.total) * 100) %>%
+                </div>
+              </div>
+              
+              <div class="history-actions">
+                <a href="/quiz/<%= result.Category.slug %>" class="btn btn-sm btn-primary">
+                  <i class="fas fa-redo"></i>
+                  Retake
+                </a>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } %>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<h2>Edit Question</h2>
+
+<form action="/admin/questions/<%= question.id %>/edit" method="POST">
+  <label>Category:</label>
+  <select name="categoryId">
+    <% categories.forEach(category => { %>
+      <option value="<%= category.id %>" <%= category.id === question.categoryId ? 'selected' : '' %>>
+        <%= category.name %>
+      </option>
+    <% }) %>
+  </select><br/><br/>
+
+  <label>Question Text:</label><br/>
+  <textarea name="questionText" rows="4" cols="60" required><%= question.questionText %></textarea><br/><br/>
+
+  <label>Option A:</label><input type="text" name="optionA" value="<%= question.optionA %>" required /><br/>
+  <label>Option B:</label><input type="text" name="optionB" value="<%= question.optionB %>" required /><br/>
+  <label>Option C:</label><input type="text" name="optionC" value="<%= question.optionC %>" required /><br/>
+  <label>Option D:</label><input type="text" name="optionD" value="<%= question.optionD %>" required /><br/><br/>
+
+  <label>Correct Option:</label>
+  <select name="correctOption">
+    <option value="A" <%= question.correctOption === 'A' ? 'selected' : '' %>>A</option>
+    <option value="B" <%= question.correctOption === 'B' ? 'selected' : '' %>>B</option>
+    <option value="C" <%= question.correctOption === 'C' ? 'selected' : '' %>>C</option>
+    <option value="D" <%= question.correctOption === 'D' ? 'selected' : '' %>>D</option>
+  </select><br/><br/>
+
+  <button type="submit">Update Question</button>
+</form>

@@ -1,0 +1,29 @@
+<h2>All Questions</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Category</th>
+      <th>Question</th>
+      <th>Correct Option</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% questions.forEach(q => { %>
+      <tr>
+        <td><%= q.id %></td>
+        <td><%= q.Category.name %></td>
+        <td><%= q.questionText %></td>
+        <td><%= q.correctOption %></td>
+        <td>
+          <a href="/admin/questions/<%= q.id %>/edit">Edit</a>
+          <form action="/admin/questions/<%= q.id %>/delete" method="POST" style="display:inline;">
+            <button type="submit" onclick="return confirm('Delete this question?')">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
